@@ -140,7 +140,10 @@
     ?>
         <h3 class="subsection-title">Methods</h3>
 
-        <?js methods.forEach(function(m) { ?>
+        <?js methods
+            .filter(function (m) {return !m.inherited })
+            .forEach(function(m) {
+        ?>
             <?js= self.partial('method.tmpl', m) ?>
         <?js }); ?>
     <?js } ?>
