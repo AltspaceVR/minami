@@ -295,7 +295,11 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
     if (items && items.length) {
         var itemsNav = '';
 
-        items.forEach(function(item) {
+        let sortfn = (a,b) => {
+            [a,b] = [a.name, b.name]
+            return a < b ? -1 : a > b ? 1 : 0;
+        }
+        items.sort(sortfn).forEach(function(item) {
             var methods = find({kind:'function', memberof: item.longname});
             var members = find({kind:'member', memberof: item.longname});
 
@@ -318,14 +322,13 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
                 }
 
                 itemsNav += '<li>' + linktoFn(item.longname, displayName.replace(/^module:/g, ''));
+                methods = methods.filter(function (method) {
+                    return !method.inherited;
+                })
                 if (methods.length) {
                     itemsNav += "<ul class='methods'>";
 
-                    methods
-                        .filter(function (method) {
-                            return !method.inherited;
-                        })
-                        .forEach(function (method) {
+                    methods.forEach(function (method) {
                             itemsNav += "<li data-type='method'>";
                             itemsNav += linkto(method.longname, method.name);
                             itemsNav += "</li>";
@@ -378,7 +381,7 @@ function buildNav(members) {
     nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
     nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
     nav += buildMemberNav(members.events, 'Events', seen, linkto);
-    nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto);
+    nav += buildMemberNav(members.mixins, 'A-Frame Components', seen, linkto);
     nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
     nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
 
