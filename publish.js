@@ -296,10 +296,11 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
         var itemsNav = '';
 
         let sortfn = (a,b) => {
-            [a,b] = [a.name, b.name]
+            [a,b] = [a.name.toLowerCase(), b.name.toLowerCase()]
             return a < b ? -1 : a > b ? 1 : 0;
         }
         items.sort(sortfn).forEach(function(item) {
+
             var methods = find({kind:'function', memberof: item.longname});
             var members = find({kind:'member', memberof: item.longname});
 
@@ -381,7 +382,7 @@ function buildNav(members) {
     nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
     nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
     nav += buildMemberNav(members.events, 'Events', seen, linkto);
-    nav += buildMemberNav(members.mixins, 'A-Frame Components', seen, linkto);
+    nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto);
     nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
     nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
 

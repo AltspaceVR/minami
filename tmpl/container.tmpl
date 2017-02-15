@@ -2,6 +2,13 @@
     var self = this;
     var isGlobalPage;
 
+    function snipAFrame(desc){
+        var sliceIndex = desc.indexOf(' @aframe');
+        var output = desc.slice(0, sliceIndex) + desc.slice(sliceIndex+8);
+        console.log(desc, '=>', output);
+        return output;
+    }
+
     docs.forEach(function(doc, i) {
 ?>
 
@@ -29,7 +36,7 @@
             <sup class="variation"><?js= doc.variation ?></sup>
         <?js } ?></h2>
         <?js if (doc.classdesc) { ?>
-            <div class="class-description"><?js= doc.classdesc ?></div>
+            <div class="class-description"><?js= snipAFrame(doc.classdesc) ?></div>
         <?js } ?>
     <?js } else if (doc.kind === 'module' && doc.modules) { ?>
         <?js doc.modules.forEach(function(module) { ?>
