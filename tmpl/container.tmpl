@@ -4,7 +4,10 @@
 
     function snipAFrame(desc){
         var sliceIndex = desc.indexOf(' @aframe');
-        return desc.slice(0, sliceIndex) + desc.slice(sliceIndex+8);
+        if(sliceIndex > -1)
+            return desc.slice(0, sliceIndex) + desc.slice(sliceIndex+8);
+        else
+            return desc;
     }
 
     docs.forEach(function(doc, i) {
